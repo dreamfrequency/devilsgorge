@@ -141,8 +141,8 @@
             }
         </g>
 
-        <!-- Ambient fire light on walls -->
-        <rect x="0" y="0" width="800" height="600" fill="url(#ambientFireLight)"/>
+        <!-- Ambient fire light on walls - pointer-events none for click-through -->
+        <rect x="0" y="0" width="800" height="600" fill="url(#ambientFireLight)" pointer-events="none"/>
 
         <!-- Floor -->
         <g class="floor">
@@ -259,7 +259,7 @@
                filter="@(IsFlintHovered() && !flintDisabled ? "url(#itemGlow)" : "")"
                opacity="@(flintDisabled ? "0.4" : "1")">
                 <!-- Invisible hit area for better click detection -->
-                <rect x="345" y="285" width="85" height="65" fill="transparent"/>
+                <rect x="345" y="285" width="85" height="65" fill="rgba(0,0,0,0)" style="cursor: pointer;"/>
                 <!-- Flint stone -->
                 <path d="M350 338 L358 310 L378 305 L392 318 L388 340 L365 342 Z"
                       fill="url(#flintGradient)" stroke="#1a1a1a" stroke-width="1"/>
@@ -291,7 +291,7 @@
                filter="@(IsLanternHovered() && !lanternDisabled ? "url(#itemGlow)" : "")"
                opacity="@(lanternDisabled ? "0.4" : "1")">
                 <!-- Invisible hit area for better click detection -->
-                <rect x="448" y="245" width="65" height="120" fill="transparent"/>
+                <rect x="448" y="245" width="65" height="120" fill="rgba(0,0,0,0)" style="cursor: pointer;"/>
 
                 <!-- Lantern ambient glow -->
                 <ellipse cx="480" cy="300" rx="50" ry="50" fill="url(#lanternAmbient)" class="lantern-ambient-glow" opacity="@(lanternDisabled ? "0.3" : "1")"/>
@@ -341,8 +341,8 @@
             </g>
         }
 
-        <!-- Dust particles overlay -->
-        <g class="dust-particles" opacity="0.3">
+        <!-- Dust particles overlay - pointer-events none so items remain clickable -->
+        <g class="dust-particles" opacity="0.3" pointer-events="none">
             <circle cx="200" cy="150" r="1" fill="#c9b896" class="dust dust-1"/>
             <circle cx="450" cy="200" r="0.8" fill="#c9b896" class="dust dust-2"/>
             <circle cx="350" cy="100" r="1.2" fill="#c9b896" class="dust dust-3"/>
@@ -353,8 +353,8 @@
             <circle cx="700" cy="400" r="1.1" fill="#c9b896" class="dust dust-8"/>
         </g>
 
-        <!-- Cobwebs -->
-        <g class="cobwebs" opacity="0.15">
+        <!-- Cobwebs - pointer-events none so items remain clickable -->
+        <g class="cobwebs" opacity="0.15" pointer-events="none">
             <!-- Top left cobweb -->
             <path d="M0 0 Q30 30 0 60" stroke="#ccc" stroke-width="0.5" fill="none"/>
             <path d="M0 0 Q40 20 80 0" stroke="#ccc" stroke-width="0.5" fill="none"/>
@@ -366,8 +366,8 @@
             <path d="M800 0 L750 50" stroke="#ccc" stroke-width="0.3" fill="none"/>
         </g>
 
-        <!-- Vignette overlay -->
-        <rect x="0" y="0" width="800" height="600" fill="url(#ambientFireLight)" opacity="0.5"/>
+        <!-- Vignette overlay - pointer-events none so items remain clickable -->
+        <rect x="0" y="0" width="800" height="600" fill="url(#ambientFireLight)" opacity="0.5" pointer-events="none"/>
     </svg>
 </div>
 
