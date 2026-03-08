@@ -290,3 +290,226 @@ html, body {
     right: 0.75rem;
     top: 0.5rem;
 }
+
+/* ========================================
+   HOUSE INTERIOR SVG STYLES
+   ======================================== */
+
+.house-interior-container {
+    width: 100%;
+    height: 100vh;
+    background: #0d0906;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.house-scene {
+    width: 100%;
+    height: 100%;
+    max-width: 1200px;
+    max-height: 900px;
+}
+
+/* SVG Clickable Items */
+.item {
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.item:hover,
+.item.hovered {
+    transform: translateY(-3px);
+}
+
+.item.collecting {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Fire and flame animations */
+.fire-glow {
+    animation: fireGlow 2s ease-in-out infinite;
+}
+
+@keyframes fireGlow {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+.flame {
+    animation: flameFlicker 0.4s ease-in-out infinite alternate;
+    transform-origin: bottom center;
+}
+
+.flame-1 { animation-delay: 0s; }
+.flame-2 { animation-delay: 0.1s; }
+.flame-3 { animation-delay: 0.2s; }
+.flame-inner-1 { animation-delay: 0.15s; }
+.flame-inner-2 { animation-delay: 0.25s; }
+
+@keyframes flameFlicker {
+    0% { transform: scaleY(1) scaleX(1) translateY(0); }
+    100% { transform: scaleY(1.15) scaleX(0.9) translateY(-2px); }
+}
+
+/* Ember animations */
+.ember {
+    animation: emberGlow 1.5s ease-in-out infinite;
+}
+
+.ember-1 { animation-delay: 0s; }
+.ember-2 { animation-delay: 0.3s; }
+.ember-3 { animation-delay: 0.6s; }
+.ember-4 { animation-delay: 0.9s; }
+.ember-5 { animation-delay: 1.2s; }
+
+@keyframes emberGlow {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* Lantern animations */
+.lantern-ambient-glow {
+    animation: lanternAmbientPulse 3s ease-in-out infinite;
+}
+
+@keyframes lanternAmbientPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.9; }
+}
+
+.lantern-inner-glow {
+    animation: lanternInnerPulse 2s ease-in-out infinite;
+}
+
+@keyframes lanternInnerPulse {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+.lantern-flame {
+    animation: lanternFlameFlicker 0.5s ease-in-out infinite alternate;
+    transform-origin: bottom center;
+}
+
+@keyframes lanternFlameFlicker {
+    0% { transform: scaleY(1) scaleX(1); }
+    100% { transform: scaleY(1.1) scaleX(0.95); }
+}
+
+/* Dust particle animations */
+.dust {
+    animation: dustFloat 15s ease-in-out infinite;
+}
+
+.dust-1 { animation-delay: 0s; animation-duration: 12s; }
+.dust-2 { animation-delay: 2s; animation-duration: 18s; }
+.dust-3 { animation-delay: 4s; animation-duration: 14s; }
+.dust-4 { animation-delay: 1s; animation-duration: 16s; }
+.dust-5 { animation-delay: 3s; animation-duration: 20s; }
+.dust-6 { animation-delay: 5s; animation-duration: 13s; }
+.dust-7 { animation-delay: 2.5s; animation-duration: 17s; }
+.dust-8 { animation-delay: 4.5s; animation-duration: 15s; }
+
+@keyframes dustFloat {
+    0%, 100% { transform: translate(0, 0); opacity: 0.3; }
+    25% { transform: translate(10px, -20px); opacity: 0.5; }
+    50% { transform: translate(-5px, -40px); opacity: 0.2; }
+    75% { transform: translate(15px, -20px); opacity: 0.4; }
+}
+
+/* ========================================
+   SVG INVENTORY BACKPACK STYLES
+   ======================================== */
+
+.inventory-backpack {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.inventory-backpack .backpack-svg {
+    width: 80px;
+    height: 95px;
+    cursor: pointer;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.inventory-backpack .backpack-svg:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
+}
+
+.inventory-backpack.open .backpack-svg {
+    transform: scale(1.05);
+}
+
+.inventory-panel {
+    position: absolute;
+    bottom: 105px;
+    right: 0;
+    animation: panelSlideIn 0.3s ease;
+}
+
+@keyframes panelSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.inventory-panel-svg {
+    width: 200px;
+    height: 280px;
+    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.6));
+}
+
+/* ========================================
+   COLLECTION ANIMATION STYLES
+   ======================================== */
+
+.collection-animation {
+    position: fixed;
+    z-index: 200;
+    pointer-events: none;
+    animation: collectToInventory 0.6s ease-in-out forwards;
+}
+
+.collection-animation.flint-steel {
+    top: 50%;
+    left: 45%;
+}
+
+.collection-animation.lantern {
+    top: 50%;
+    left: 55%;
+}
+
+.collecting-item-svg {
+    width: 80px;
+    height: 80px;
+}
+
+@keyframes collectToInventory {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(0, -50px) scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(100vw - 150px - 50%), calc(100vh - 150px - 50%)) scale(0.3);
+        opacity: 0;
+    }
+}
