@@ -1,4 +1,5 @@
 @page "/house"
+@rendermode InteractiveServer
 @inject BlazorStarter.Services.GameState GameState
 @implements IDisposable
 
@@ -241,13 +242,24 @@
         </g>
 
         <!-- Flint & Steel Item -->
-        @if (!GameState.IsItemCollected(FlintSteelId))
+        @{
+            var flintCollected = GameState.IsItemCollected(FlintSteelId);
+            var lanternCollected = GameState.IsItemCollected(LanternId);
+            var anyItemCollected = flintCollected || lanternCollected;
+            var flintDisabled = !flintCollected && lanternCollected;
+            var lanternDisabled = !lanternCollected && flintCollected;
+        }
+        @if (!flintCollected)
         {
-            <g class="item flint-steel @(hoveredItem == FlintSteelId ? "hovered" : "") @(collectingItem == FlintSteelId ? "collecting" : "")"
+            <g class="item flint-steel @(IsFlintHovered() ? "hovered" : "") @(collectingItem == FlintSteelId ? "collecting" : "") @(flintDisabled ? "disabled" : "")"
                @onclick="OnFlintSteelClickAsync"
                @onmouseenter="OnFlintSteelEnter"
                @onmouseleave="OnMouseLeave"
-               filter="@(hoveredItem == FlintSteelId ? "url(#itemGlow)" : "")">
+               style="pointer-events: all; cursor: @(flintDisabled ? "not-allowed" : "pointer");"
+               filter="@(IsFlintHovered() && !flintDisabled ? "url(#itemGlow)" : "")"
+               opacity="@(flintDisabled ? "0.4" : "1")">
+                <!-- Invisible hit area for better click detection -->
+                <rect x="345" y="285" width="85" height="65" fill="transparent"/>
                 <!-- Flint stone -->
                 <path d="M350 338 L358 310 L378 305 L392 318 L388 340 L365 342 Z"
                       fill="url(#flintGradient)" stroke="#1a1a1a" stroke-width="1"/>
@@ -269,16 +281,20 @@
         }
 
         <!-- Lantern Item -->
-        @if (!GameState.IsItemCollected(LanternId))
+        @if (!lanternCollected)
         {
-            <g class="item lantern @(hoveredItem == LanternId ? "hovered" : "") @(collectingItem == LanternId ? "collecting" : "")"
+            <g class="item lantern @(IsLanternHovered() ? "hovered" : "") @(collectingItem == LanternId ? "collecting" : "") @(lanternDisabled ? "disabled" : "")"
                @onclick="OnLanternClickAsync"
                @onmouseenter="OnLanternEnter"
                @onmouseleave="OnMouseLeave"
-               filter="@(hoveredItem == LanternId ? "url(#itemGlow)" : "")">
+               style="pointer-events: all; cursor: @(lanternDisabled ? "not-allowed" : "pointer");"
+               filter="@(IsLanternHovered() && !lanternDisabled ? "url(#itemGlow)" : "")"
+               opacity="@(lanternDisabled ? "0.4" : "1")">
+                <!-- Invisible hit area for better click detection -->
+                <rect x="448" y="245" width="65" height="120" fill="transparent"/>
 
                 <!-- Lantern ambient glow -->
-                <ellipse cx="480" cy="300" rx="50" ry="50" fill="url(#lanternAmbient)" class="lantern-ambient-glow"/>
+                <ellipse cx="480" cy="300" rx="50" ry="50" fill="url(#lanternAmbient)" class="lantern-ambient-glow" opacity="@(lanternDisabled ? "0.3" : "1")"/>
 
                 <!-- Handle -->
                 <path d="M465 260 Q480 248 495 260" fill="none" stroke="#4a3a2a" stroke-width="4" stroke-linecap="round"/>
@@ -300,17 +316,20 @@
                 <line x1="497" y1="272" x2="502" y2="345" stroke="#3a3a3a" stroke-width="1"/>
 
                 <!-- Inner glow -->
-                <ellipse cx="480" cy="310" rx="18" ry="28" fill="url(#lanternGlow)" class="lantern-inner-glow"/>
+                <ellipse cx="480" cy="310" rx="18" ry="28" fill="url(#lanternGlow)" class="lantern-inner-glow" opacity="@(lanternDisabled ? "0.3" : "1")"/>
 
                 <!-- Wick holder -->
                 <rect x="475" y="325" width="10" height="15" fill="#3a3a3a"/>
 
                 <!-- Flame -->
-                <g class="lantern-flame">
-                    <path d="M480 322 Q475 308 480 295 Q485 308 480 322" fill="#ff9933" class="lantern-flame-outer"/>
-                    <path d="M480 320 Q477 310 480 300 Q483 310 480 320" fill="#ffcc66"/>
-                    <path d="M480 318 Q478 312 480 305 Q482 312 480 318" fill="#ffeeaa"/>
-                </g>
+                @if (!lanternDisabled)
+                {
+                    <g class="lantern-flame">
+                        <path d="M480 322 Q475 308 480 295 Q485 308 480 322" fill="#ff9933" class="lantern-flame-outer"/>
+                        <path d="M480 320 Q477 310 480 300 Q483 310 480 320" fill="#ffcc66"/>
+                        <path d="M480 318 Q478 312 480 305 Q482 312 480 318" fill="#ffeeaa"/>
+                    </g>
+                }
 
                 <!-- Bottom base -->
                 <rect x="450" y="348" width="60" height="10" rx="2" fill="#5a4a3a" stroke="#3a2a1a" stroke-width="1"/>
@@ -350,10 +369,11 @@
         <!-- Vignette overlay -->
         <rect x="0" y="0" width="800" height="600" fill="url(#ambientFireLight)" opacity="0.5"/>
     </svg>
+</div>
 
-    <!-- SVG Inventory Backpack -->
-    <div class="inventory-backpack @(showInventory ? "open" : "")">
-        <svg viewBox="0 0 120 140" class="backpack-svg" @onclick="ToggleInventory" xmlns="http://www.w3.org/2000/svg">
+<!-- SVG Inventory Backpack - Outside container for proper fixed positioning -->
+<div class="inventory-backpack @(showInventory ? "open" : "")">
+    <svg viewBox="0 0 120 140" class="backpack-svg" @onclick="ToggleInventory" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <linearGradient id="bpLeather" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" stop-color="#6a5040"/>
@@ -479,52 +499,51 @@
                 </svg>
             </div>
         }
-    </div>
-
-    <!-- Collection animation overlay -->
-    @if (!string.IsNullOrEmpty(collectingItem))
-    {
-        <div class="collection-animation @collectingItem">
-            <svg viewBox="0 0 100 100" class="collecting-item-svg" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="collectFlint" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#4a4a4a"/>
-                        <stop offset="100%" stop-color="#1a1a1a"/>
-                    </linearGradient>
-                    <linearGradient id="collectSteel" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#8a9197"/>
-                        <stop offset="100%" stop-color="#4a5258"/>
-                    </linearGradient>
-                    <radialGradient id="collectLanternGlow" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="#ffdd66" stop-opacity="0.9"/>
-                        <stop offset="100%" stop-color="#ff8800" stop-opacity="0"/>
-                    </radialGradient>
-                </defs>
-                @if (collectingItem == FlintSteelId)
-                {
-                    <g transform="translate(10, 15) scale(0.8)">
-                        <path d="M20 50 L28 22 L48 17 L62 30 L58 52 L35 54 Z" fill="url(#collectFlint)" stroke="#1a1a1a" stroke-width="1"/>
-                        <path d="M55 7 Q70 0 85 7 L92 20 Q96 30 90 40 L80 44 Q68 48 58 40 L52 27 Q48 17 55 7"
-                              fill="url(#collectSteel)" stroke="#2a2a2a" stroke-width="1"/>
-                        <ellipse cx="72" cy="24" rx="5" ry="8" fill="#2a2a2a"/>
-                    </g>
-                }
-                else if (collectingItem == LanternId)
-                {
-                    <g transform="translate(20, 5) scale(0.7)">
-                        <path d="M25 25 Q40 15 55 25" fill="none" stroke="#4a3a2a" stroke-width="3"/>
-                        <path d="M18 35 L62 35 L58 28 L22 28 Z" fill="#5a4a3a"/>
-                        <path d="M18 35 L13 95 Q13 105 23 105 L57 105 Q67 105 67 95 L62 35"
-                              fill="#1a1a1a" fill-opacity="0.3" stroke="#4a4a4a" stroke-width="1"/>
-                        <ellipse cx="40" cy="70" rx="15" ry="22" fill="url(#collectLanternGlow)" opacity="0.8"/>
-                        <path d="M40 80 Q36 68 40 55 Q44 68 40 80" fill="#ffcc66"/>
-                        <rect x="10" y="105" width="60" height="10" rx="2" fill="#5a4a3a"/>
-                    </g>
-                }
-            </svg>
-        </div>
-    }
 </div>
+
+<!-- Collection animation overlay -->
+@if (!string.IsNullOrEmpty(collectingItem))
+{
+    <div class="collection-animation @collectingItem">
+        <svg viewBox="0 0 100 100" class="collecting-item-svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="collectFlint" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#4a4a4a"/>
+                    <stop offset="100%" stop-color="#1a1a1a"/>
+                </linearGradient>
+                <linearGradient id="collectSteel" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#8a9197"/>
+                    <stop offset="100%" stop-color="#4a5258"/>
+                </linearGradient>
+                <radialGradient id="collectLanternGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#ffdd66" stop-opacity="0.9"/>
+                    <stop offset="100%" stop-color="#ff8800" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+            @if (collectingItem == FlintSteelId)
+            {
+                <g transform="translate(10, 15) scale(0.8)">
+                    <path d="M20 50 L28 22 L48 17 L62 30 L58 52 L35 54 Z" fill="url(#collectFlint)" stroke="#1a1a1a" stroke-width="1"/>
+                    <path d="M55 7 Q70 0 85 7 L92 20 Q96 30 90 40 L80 44 Q68 48 58 40 L52 27 Q48 17 55 7"
+                          fill="url(#collectSteel)" stroke="#2a2a2a" stroke-width="1"/>
+                    <ellipse cx="72" cy="24" rx="5" ry="8" fill="#2a2a2a"/>
+                </g>
+            }
+            else if (collectingItem == LanternId)
+            {
+                <g transform="translate(20, 5) scale(0.7)">
+                    <path d="M25 25 Q40 15 55 25" fill="none" stroke="#4a3a2a" stroke-width="3"/>
+                    <path d="M18 35 L62 35 L58 28 L22 28 Z" fill="#5a4a3a"/>
+                    <path d="M18 35 L13 95 Q13 105 23 105 L57 105 Q67 105 67 95 L62 35"
+                          fill="#1a1a1a" fill-opacity="0.3" stroke="#4a4a4a" stroke-width="1"/>
+                    <ellipse cx="40" cy="70" rx="15" ry="22" fill="url(#collectLanternGlow)" opacity="0.8"/>
+                    <path d="M40 80 Q36 68 40 55 Q44 68 40 80" fill="#ffcc66"/>
+                    <rect x="10" y="105" width="60" height="10" rx="2" fill="#5a4a3a"/>
+                </g>
+            }
+        </svg>
+    </div>
+}
 
 @code {
     private const string FlintSteelId = "flint-steel";
@@ -560,8 +579,23 @@
         showInventory = !showInventory;
     }
 
-    private async Task OnFlintSteelClickAsync() => await CollectItem(FlintSteel);
-    private async Task OnLanternClickAsync() => await CollectItem(Lantern);
+    private bool IsFlintHovered() => hoveredItem == FlintSteelId;
+    private bool IsLanternHovered() => hoveredItem == LanternId;
+    private bool IsFlintDisabled() => !GameState.IsItemCollected(FlintSteelId) && GameState.IsItemCollected(LanternId);
+    private bool IsLanternDisabled() => !GameState.IsItemCollected(LanternId) && GameState.IsItemCollected(FlintSteelId);
+
+    private async Task OnFlintSteelClickAsync()
+    {
+        if (IsFlintDisabled()) return;
+        await CollectItem(FlintSteel);
+    }
+
+    private async Task OnLanternClickAsync()
+    {
+        if (IsLanternDisabled()) return;
+        await CollectItem(Lantern);
+    }
+
     private void OnFlintSteelEnter() => hoveredItem = FlintSteelId;
     private void OnLanternEnter() => hoveredItem = LanternId;
     private void OnMouseLeave() => hoveredItem = null;
@@ -569,6 +603,10 @@
     private async Task CollectItem(GameItem item)
     {
         if (GameState.IsItemCollected(item.Id))
+            return;
+
+        // Check if another item is already collected
+        if (GameState.Inventory.Count > 0)
             return;
 
         collectingItem = item.Id;

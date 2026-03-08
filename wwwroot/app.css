@@ -300,7 +300,6 @@ html, body {
     height: 100vh;
     background: #0d0906;
     position: relative;
-    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -316,17 +315,29 @@ html, body {
 /* SVG Clickable Items */
 .item {
     cursor: pointer;
-    transition: transform 0.3s ease, filter 0.3s ease;
+    transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+    pointer-events: all;
 }
 
-.item:hover,
-.item.hovered {
-    transform: translateY(-3px);
+.item:hover {
+    transform: translateY(-5px) scale(1.05);
+    filter: drop-shadow(0 0 15px rgba(255, 204, 102, 0.7));
 }
 
 .item.collecting {
     opacity: 0;
     transition: opacity 0.3s ease;
+}
+
+.item.disabled {
+    cursor: not-allowed;
+    filter: grayscale(70%) brightness(0.6);
+    pointer-events: none;
+}
+
+.item.disabled:hover {
+    transform: none;
+    filter: grayscale(70%) brightness(0.6);
 }
 
 /* Fire and flame animations */
@@ -429,7 +440,8 @@ html, body {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 100;
+    z-index: 1000;
+    pointer-events: all;
 }
 
 .inventory-backpack .backpack-svg {
