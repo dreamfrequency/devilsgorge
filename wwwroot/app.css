@@ -525,3 +525,119 @@ html, body {
         opacity: 0;
     }
 }
+
+/* ========================================
+   CAMPER VAN INTERIOR STYLES
+   ======================================== */
+
+.camper-van-container {
+    width: 100%;
+    height: 100vh;
+    background: #0a0a0f;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.camper-scene {
+    width: 100%;
+    height: 100%;
+    max-width: 1400px;
+    max-height: 1050px;
+}
+
+/* Star twinkling animations */
+.star {
+    animation: starTwinkle 3s ease-in-out infinite;
+}
+
+.star-1 { animation-delay: 0s; }
+.star-2 { animation-delay: 0.5s; }
+.star-3 { animation-delay: 1s; }
+.star-4 { animation-delay: 1.5s; }
+.star-5 { animation-delay: 0.3s; }
+.star-6 { animation-delay: 0.8s; }
+.star-7 { animation-delay: 1.2s; }
+.star-8 { animation-delay: 1.8s; }
+
+@keyframes starTwinkle {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Gauge glow pulse */
+.gauge-glow {
+    animation: gaugePulse 2s ease-in-out infinite;
+}
+
+@keyframes gaugePulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+}
+
+/* Road line animation (prepared for driving) */
+.road-line {
+    animation: none; /* Will be activated when driving */
+}
+
+@keyframes roadLineMove {
+    0% { transform: translateY(0) scaleY(1); opacity: 0.3; }
+    100% { transform: translateY(200px) scaleY(2); opacity: 0.8; }
+}
+
+/* Steering wheel - prepared for turning animation */
+.steering-wheel {
+    transition: transform 0.3s ease;
+    transform-origin: center center;
+}
+
+/* Ignition switch - prepared for interaction */
+.ignition-switch {
+    cursor: pointer;
+    transition: filter 0.2s ease;
+}
+
+.ignition-switch:hover {
+    filter: brightness(1.2);
+}
+
+/* Cabin dust floating animation */
+.camper-van-container .dust {
+    animation: cabinDustFloat 12s ease-in-out infinite;
+}
+
+.camper-van-container .dust-1 { animation-delay: 0s; animation-duration: 10s; }
+.camper-van-container .dust-2 { animation-delay: 2s; animation-duration: 14s; }
+.camper-van-container .dust-3 { animation-delay: 1s; animation-duration: 11s; }
+.camper-van-container .dust-4 { animation-delay: 3s; animation-duration: 13s; }
+.camper-van-container .dust-5 { animation-delay: 1.5s; animation-duration: 15s; }
+
+@keyframes cabinDustFloat {
+    0%, 100% { transform: translate(0, 0); opacity: 0.2; }
+    25% { transform: translate(5px, -10px); opacity: 0.4; }
+    50% { transform: translate(-3px, -20px); opacity: 0.15; }
+    75% { transform: translate(8px, -10px); opacity: 0.35; }
+}
+
+/* Moon subtle glow animation */
+.camper-scene circle[fill="url(#moonGlowRoad)"] {
+    animation: moonGlow 8s ease-in-out infinite;
+}
+
+@keyframes moonGlow {
+    0%, 100% { opacity: 0.9; }
+    50% { opacity: 1; }
+}
+
+/* Distant trees subtle sway (wind effect) */
+.distant-trees {
+    animation: treeSway 15s ease-in-out infinite;
+    transform-origin: bottom center;
+}
+
+@keyframes treeSway {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(2px); }
+}

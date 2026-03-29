@@ -1,0 +1,417 @@
+@page "/road"
+@rendermode InteractiveServer
+
+<PageTitle>Devil's Gorge - The Road</PageTitle>
+
+<div class="camper-van-container">
+    <svg viewBox="0 0 800 600" class="camper-scene" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <!-- Night sky gradient -->
+            <linearGradient id="nightSkyRoad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#0a0a12"/>
+                <stop offset="40%" stop-color="#1a1a28"/>
+                <stop offset="100%" stop-color="#252535"/>
+            </linearGradient>
+
+            <!-- Road gradient with perspective -->
+            <linearGradient id="roadGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#1a1a1a"/>
+                <stop offset="100%" stop-color="#2a2a2a"/>
+            </linearGradient>
+
+            <!-- Dashboard gradient -->
+            <linearGradient id="dashboardGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#3a3530"/>
+                <stop offset="30%" stop-color="#2a2520"/>
+                <stop offset="100%" stop-color="#1a1510"/>
+            </linearGradient>
+
+            <!-- Dashboard top surface -->
+            <linearGradient id="dashboardTop" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#4a4540"/>
+                <stop offset="100%" stop-color="#3a3530"/>
+            </linearGradient>
+
+            <!-- Steering wheel leather -->
+            <linearGradient id="steeringLeather" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2a2825"/>
+                <stop offset="50%" stop-color="#1a1815"/>
+                <stop offset="100%" stop-color="#0a0805"/>
+            </linearGradient>
+
+            <!-- Steering wheel metallic center -->
+            <radialGradient id="steeringCenter" cx="50%" cy="40%" r="50%">
+                <stop offset="0%" stop-color="#5a5550"/>
+                <stop offset="100%" stop-color="#2a2520"/>
+            </radialGradient>
+
+            <!-- Windscreen glass tint -->
+            <linearGradient id="windscreenTint" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="rgba(20, 30, 40, 0.3)"/>
+                <stop offset="100%" stop-color="rgba(10, 15, 20, 0.1)"/>
+            </linearGradient>
+
+            <!-- Headlight beam gradient -->
+            <linearGradient id="headlightBeam" x1="0%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="rgba(255, 250, 220, 0.15)"/>
+                <stop offset="50%" stop-color="rgba(255, 250, 220, 0.05)"/>
+                <stop offset="100%" stop-color="rgba(255, 250, 220, 0)"/>
+            </linearGradient>
+
+            <!-- Ignition keyhole metal -->
+            <radialGradient id="ignitionMetal" cx="50%" cy="30%" r="60%">
+                <stop offset="0%" stop-color="#6a6560"/>
+                <stop offset="100%" stop-color="#3a3530"/>
+            </radialGradient>
+
+            <!-- Side pillar gradient left -->
+            <linearGradient id="pillarLeft" x1="100%" y1="0%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#2a2520"/>
+                <stop offset="100%" stop-color="#1a1510"/>
+            </linearGradient>
+
+            <!-- Side pillar gradient right -->
+            <linearGradient id="pillarRight" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#2a2520"/>
+                <stop offset="100%" stop-color="#1a1510"/>
+            </linearGradient>
+
+            <!-- Moon glow -->
+            <radialGradient id="moonGlowRoad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#e8e8ff" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="#e8e8ff" stop-opacity="0"/>
+            </radialGradient>
+
+            <!-- Road line gradient -->
+            <linearGradient id="roadLineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#f0e68c" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#f0e68c" stop-opacity="0.8"/>
+            </linearGradient>
+
+            <!-- Vignette for atmosphere -->
+            <radialGradient id="vanVignette" cx="50%" cy="50%" r="70%">
+                <stop offset="0%" stop-color="transparent"/>
+                <stop offset="100%" stop-color="rgba(0, 0, 0, 0.4)"/>
+            </radialGradient>
+
+            <!-- Interior ambient light -->
+            <radialGradient id="interiorAmbient" cx="50%" cy="30%" r="80%">
+                <stop offset="0%" stop-color="rgba(40, 50, 60, 0.1)"/>
+                <stop offset="100%" stop-color="transparent"/>
+            </radialGradient>
+
+            <!-- Dashboard gauge glow -->
+            <radialGradient id="gaugeGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#3a5540" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#1a2520" stop-opacity="0"/>
+            </radialGradient>
+
+            <!-- Tree silhouette color -->
+            <linearGradient id="treeSilhouette" x1="0%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#0a0a12"/>
+                <stop offset="100%" stop-color="#15151f"/>
+            </linearGradient>
+        </defs>
+
+        <!-- ============================================
+             WINDSCREEN VIEW (Background through glass)
+             ============================================ -->
+
+        <!-- Night sky through windscreen -->
+        <rect x="80" y="20" width="640" height="280" fill="url(#nightSkyRoad)" rx="5"/>
+
+        <!-- Distant treeline silhouette -->
+        <g class="distant-trees">
+            <!-- Left side trees -->
+            <path d="M80 180 L100 140 L110 180 L125 130 L140 180 L160 145 L175 180 L190 150 L200 180 L80 180"
+                  fill="url(#treeSilhouette)"/>
+            <path d="M200 175 L220 120 L235 175 L250 135 L270 175 L290 125 L305 175"
+                  fill="url(#treeSilhouette)"/>
+
+            <!-- Right side trees -->
+            <path d="M500 175 L520 130 L535 175 L555 120 L575 175 L590 140 L610 175"
+                  fill="url(#treeSilhouette)"/>
+            <path d="M600 180 L625 145 L645 180 L665 135 L685 180 L700 150 L720 180"
+                  fill="url(#treeSilhouette)"/>
+        </g>
+
+        <!-- Moon -->
+        <circle cx="620" cy="80" r="50" fill="url(#moonGlowRoad)"/>
+        <circle cx="625" cy="75" r="18" fill="#e0e0e8" opacity="0.9"/>
+        <!-- Moon craters -->
+        <circle cx="620" cy="70" r="3" fill="#c8c8d0" opacity="0.5"/>
+        <circle cx="630" cy="80" r="2" fill="#c8c8d0" opacity="0.4"/>
+        <circle cx="618" cy="82" r="1.5" fill="#c8c8d0" opacity="0.3"/>
+
+        <!-- Stars -->
+        <g class="stars">
+            <circle cx="150" cy="50" r="1" fill="#fff" opacity="0.8" class="star star-1"/>
+            <circle cx="220" cy="80" r="0.8" fill="#fff" opacity="0.6" class="star star-2"/>
+            <circle cx="300" cy="45" r="1.2" fill="#fff" opacity="0.7" class="star star-3"/>
+            <circle cx="380" cy="70" r="0.7" fill="#fff" opacity="0.5" class="star star-4"/>
+            <circle cx="450" cy="55" r="1" fill="#fff" opacity="0.8" class="star star-5"/>
+            <circle cx="520" cy="40" r="0.9" fill="#fff" opacity="0.6" class="star star-6"/>
+            <circle cx="180" cy="100" r="0.6" fill="#fff" opacity="0.5" class="star star-7"/>
+            <circle cx="550" cy="95" r="0.8" fill="#fff" opacity="0.4" class="star star-8"/>
+        </g>
+
+        <!-- Road with perspective - through windscreen -->
+        <g class="road-view">
+            <!-- Road surface -->
+            <path d="M320 300 L480 300 L720 500 L80 500 Z" fill="url(#roadGradient)"/>
+
+            <!-- Road edges/shoulders -->
+            <path d="M315 300 L320 300 L80 500 L60 500 Z" fill="#1a1510"/>
+            <path d="M480 300 L485 300 L740 500 L720 500 Z" fill="#1a1510"/>
+
+            <!-- Center line (dashed) - perspective scaled -->
+            <g class="road-lines">
+                <rect x="397" y="300" width="6" height="15" fill="url(#roadLineGrad)" class="road-line line-1"/>
+                <rect x="395" y="325" width="8" height="20" fill="url(#roadLineGrad)" class="road-line line-2"/>
+                <rect x="392" y="360" width="12" height="28" fill="url(#roadLineGrad)" class="road-line line-3"/>
+                <rect x="388" y="410" width="18" height="38" fill="url(#roadLineGrad)" class="road-line line-4"/>
+                <rect x="382" y="475" width="28" height="50" fill="url(#roadLineGrad)" class="road-line line-5"/>
+            </g>
+        </g>
+
+        <!-- Headlight beams on road -->
+        <path d="M300 300 L500 300 L650 500 L150 500 Z" fill="url(#headlightBeam)" opacity="0.6"/>
+
+        <!-- Windscreen glass tint overlay -->
+        <rect x="80" y="20" width="640" height="280" fill="url(#windscreenTint)" rx="5"/>
+
+        <!-- ============================================
+             WINDSCREEN FRAME & PILLARS
+             ============================================ -->
+
+        <!-- Left A-pillar -->
+        <path d="M0 0 L80 20 L80 300 L0 400 Z" fill="url(#pillarLeft)"/>
+        <line x1="80" y1="20" x2="80" y2="300" stroke="#3a3530" stroke-width="3"/>
+
+        <!-- Right A-pillar -->
+        <path d="M800 0 L720 20 L720 300 L800 400 Z" fill="url(#pillarRight)"/>
+        <line x1="720" y1="20" x2="720" y2="300" stroke="#3a3530" stroke-width="3"/>
+
+        <!-- Top windscreen frame -->
+        <path d="M0 0 L800 0 L720 20 L80 20 Z" fill="#1a1510"/>
+        <line x1="80" y1="20" x2="720" y2="20" stroke="#2a2520" stroke-width="2"/>
+
+        <!-- Rearview mirror -->
+        <g class="rearview-mirror">
+            <!-- Mirror arm -->
+            <rect x="390" y="0" width="20" height="35" fill="#1a1815" rx="3"/>
+            <!-- Mirror housing -->
+            <rect x="350" y="30" width="100" height="45" fill="#2a2825" rx="5"/>
+            <!-- Mirror glass -->
+            <rect x="355" y="35" width="90" height="35" fill="#0a0a15" rx="3"/>
+            <!-- Reflection hint -->
+            <rect x="360" y="40" width="35" height="8" fill="#1a1a25" opacity="0.5" rx="2"/>
+        </g>
+
+        <!-- ============================================
+             DASHBOARD
+             ============================================ -->
+
+        <!-- Main dashboard body -->
+        <path d="M0 300 L800 300 L800 600 L0 600 Z" fill="url(#dashboardGradient)"/>
+
+        <!-- Dashboard top surface with curve -->
+        <path d="M0 300 Q400 260 800 300 L800 340 Q400 300 0 340 Z" fill="url(#dashboardTop)"/>
+
+        <!-- Dashboard texture lines -->
+        <line x1="0" y1="340" x2="800" y2="340" stroke="#2a2520" stroke-width="1" opacity="0.5"/>
+        <path d="M0 360 Q400 340 800 360" stroke="#1a1510" stroke-width="1" fill="none" opacity="0.3"/>
+
+        <!-- Left gauge cluster -->
+        <g class="gauge-cluster-left" transform="translate(120, 340)">
+            <!-- Gauge housing -->
+            <circle cx="0" cy="0" r="50" fill="#1a1815" stroke="#2a2825" stroke-width="2"/>
+            <!-- Gauge face -->
+            <circle cx="0" cy="0" r="42" fill="#0a0a0a"/>
+            <!-- Speedometer markings -->
+            <g stroke="#3a5540" stroke-width="1" opacity="0.8">
+                @for (int i = 0; i < 11; i++)
+                {
+                    var angle = -135 + (i * 27);
+                    var rad = angle * Math.PI / 180;
+                    var x1 = 32 * Math.Cos(rad);
+                    var y1 = 32 * Math.Sin(rad);
+                    var x2 = 38 * Math.Cos(rad);
+                    var y2 = 38 * Math.Sin(rad);
+                    <line x1="@x1" y1="@y1" x2="@x2" y2="@y2"/>
+                }
+            </g>
+            <!-- Gauge glow -->
+            <circle cx="0" cy="0" r="35" fill="url(#gaugeGlow)" class="gauge-glow"/>
+            <!-- Needle -->
+            <line x1="0" y1="0" x2="-20" y2="-20" stroke="#cc3333" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="0" cy="0" r="5" fill="#2a2825"/>
+        </g>
+
+        <!-- Right gauge cluster -->
+        <g class="gauge-cluster-right" transform="translate(680, 340)">
+            <!-- Gauge housing -->
+            <circle cx="0" cy="0" r="50" fill="#1a1815" stroke="#2a2825" stroke-width="2"/>
+            <!-- Gauge face -->
+            <circle cx="0" cy="0" r="42" fill="#0a0a0a"/>
+            <!-- Fuel gauge markings -->
+            <g stroke="#3a5540" stroke-width="1" opacity="0.8">
+                @for (int i = 0; i < 5; i++)
+                {
+                    var angle = -135 + (i * 67.5);
+                    var rad = angle * Math.PI / 180;
+                    var x1 = 32 * Math.Cos(rad);
+                    var y1 = 32 * Math.Sin(rad);
+                    var x2 = 38 * Math.Cos(rad);
+                    var y2 = 38 * Math.Sin(rad);
+                    <line x1="@x1" y1="@y1" x2="@x2" y2="@y2"/>
+                }
+            </g>
+            <!-- Gauge glow -->
+            <circle cx="0" cy="0" r="35" fill="url(#gaugeGlow)" class="gauge-glow"/>
+            <!-- Needle - pointing to half tank -->
+            <line x1="0" y1="0" x2="0" y2="-25" stroke="#cc3333" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="0" cy="0" r="5" fill="#2a2825"/>
+        </g>
+
+        <!-- ============================================
+             IGNITION SWITCH / KEYHOLE
+             ============================================ -->
+
+        <g class="ignition-switch" transform="translate(580, 420)">
+            <!-- Ignition housing -->
+            <ellipse cx="0" cy="0" rx="22" ry="25" fill="url(#ignitionMetal)" stroke="#2a2520" stroke-width="2"/>
+
+            <!-- Keyhole slot -->
+            <ellipse cx="0" cy="-5" rx="4" ry="8" fill="#0a0805" stroke="#1a1815" stroke-width="1"/>
+            <rect x="-2" y="-2" width="4" height="12" fill="#0a0805"/>
+
+            <!-- Key position markers -->
+            <circle cx="-15" cy="0" r="2" fill="#3a3530"/>
+            <circle cx="15" cy="0" r="2" fill="#3a3530"/>
+            <circle cx="0" cy="15" r="2" fill="#3a3530"/>
+
+            <!-- OFF / ACC / ON / START labels would go here -->
+            <g fill="#5a5550" font-size="6" text-anchor="middle" font-family="monospace">
+                <text x="-16" y="12" opacity="0.6">OFF</text>
+                <text x="16" y="12" opacity="0.6">ON</text>
+            </g>
+
+            <!-- Chrome ring -->
+            <ellipse cx="0" cy="0" rx="22" ry="25" fill="none" stroke="#4a4540" stroke-width="1" opacity="0.5"/>
+        </g>
+
+        <!-- ============================================
+             STEERING WHEEL
+             ============================================ -->
+
+        <g class="steering-wheel" transform="translate(400, 480)">
+            <!-- Steering column (behind wheel) -->
+            <ellipse cx="0" cy="80" rx="35" ry="15" fill="#1a1815"/>
+            <rect x="-30" y="40" width="60" height="50" fill="#1a1815"/>
+
+            <!-- Outer rim -->
+            <circle cx="0" cy="0" r="120" fill="none" stroke="url(#steeringLeather)" stroke-width="22"/>
+
+            <!-- Inner rim highlight -->
+            <circle cx="0" cy="0" r="120" fill="none" stroke="#3a3530" stroke-width="1" opacity="0.3"/>
+
+            <!-- Grip texture on wheel (subtle) -->
+            <circle cx="0" cy="0" r="120" fill="none" stroke="#1a1815" stroke-width="22"
+                    stroke-dasharray="2 8" opacity="0.3"/>
+
+            <!-- Spokes -->
+            <g fill="url(#steeringLeather)" stroke="#1a1510" stroke-width="1">
+                <!-- Left spoke -->
+                <path d="M-100 0 L-40 0 L-35 -8 L-35 8 L-40 0
+                         C-50 -5 -60 -8 -100 -8
+                         L-100 8 C-60 8 -50 5 -40 0"/>
+                <!-- Right spoke -->
+                <path d="M100 0 L40 0 L35 -8 L35 8 L40 0
+                         C50 -5 60 -8 100 -8
+                         L100 8 C60 8 50 5 40 0"/>
+                <!-- Bottom spoke -->
+                <path d="M0 100 L0 40 L-10 35 L10 35 L0 40
+                         C-5 50 -10 60 -10 100
+                         L10 100 C10 60 5 50 0 40"/>
+            </g>
+
+            <!-- Center hub -->
+            <circle cx="0" cy="0" r="38" fill="url(#steeringCenter)" stroke="#1a1510" stroke-width="2"/>
+
+            <!-- Hub logo/emblem area -->
+            <circle cx="0" cy="0" r="25" fill="#2a2825" stroke="#3a3530" stroke-width="1"/>
+
+            <!-- Simple van emblem -->
+            <g transform="translate(0, 0)" fill="#4a4540">
+                <!-- Simple van shape -->
+                <rect x="-12" y="-6" width="24" height="12" rx="3" fill="none" stroke="#4a4540" stroke-width="1.5"/>
+                <line x1="-4" y1="-6" x2="-4" y2="6" stroke="#4a4540" stroke-width="1"/>
+                <circle cx="-8" cy="6" r="2" fill="none" stroke="#4a4540" stroke-width="1"/>
+                <circle cx="8" cy="6" r="2" fill="none" stroke="#4a4540" stroke-width="1"/>
+            </g>
+
+            <!-- Steering wheel stitching detail -->
+            <circle cx="0" cy="0" r="111" fill="none" stroke="#0a0805" stroke-width="1"
+                    stroke-dasharray="3 6" opacity="0.5"/>
+            <circle cx="0" cy="0" r="129" fill="none" stroke="#0a0805" stroke-width="1"
+                    stroke-dasharray="3 6" opacity="0.5"/>
+        </g>
+
+        <!-- ============================================
+             ADDITIONAL DASHBOARD DETAILS
+             ============================================ -->
+
+        <!-- Air vents -->
+        <g class="air-vents">
+            <!-- Left vent -->
+            <rect x="220" y="320" width="60" height="25" fill="#1a1815" rx="3" stroke="#2a2520" stroke-width="1"/>
+            <g stroke="#2a2520" stroke-width="1">
+                <line x1="228" y1="325" x2="272" y2="325"/>
+                <line x1="228" y1="330" x2="272" y2="330"/>
+                <line x1="228" y1="335" x2="272" y2="335"/>
+                <line x1="228" y1="340" x2="272" y2="340"/>
+            </g>
+
+            <!-- Right vent -->
+            <rect x="520" y="320" width="60" height="25" fill="#1a1815" rx="3" stroke="#2a2520" stroke-width="1"/>
+            <g stroke="#2a2520" stroke-width="1">
+                <line x1="528" y1="325" x2="572" y2="325"/>
+                <line x1="528" y1="330" x2="572" y2="330"/>
+                <line x1="528" y1="335" x2="572" y2="335"/>
+                <line x1="528" y1="340" x2="572" y2="340"/>
+            </g>
+        </g>
+
+        <!-- Radio/controls area -->
+        <g class="radio-area" transform="translate(400, 380)">
+            <rect x="-50" y="-20" width="100" height="40" fill="#1a1815" rx="5" stroke="#2a2520" stroke-width="1"/>
+            <!-- Display -->
+            <rect x="-42" y="-15" width="84" height="18" fill="#0a1510" rx="2"/>
+            <!-- Buttons -->
+            <circle cx="-30" cy="10" r="6" fill="#2a2825" stroke="#1a1815" stroke-width="1"/>
+            <circle cx="-10" cy="10" r="6" fill="#2a2825" stroke="#1a1815" stroke-width="1"/>
+            <circle cx="10" cy="10" r="6" fill="#2a2825" stroke="#1a1815" stroke-width="1"/>
+            <circle cx="30" cy="10" r="6" fill="#2a2825" stroke="#1a1815" stroke-width="1"/>
+        </g>
+
+        <!-- ============================================
+             ATMOSPHERE & OVERLAYS
+             ============================================ -->
+
+        <!-- Interior ambient light reflection -->
+        <rect x="0" y="0" width="800" height="600" fill="url(#interiorAmbient)" pointer-events="none"/>
+
+        <!-- Vignette effect -->
+        <rect x="0" y="0" width="800" height="600" fill="url(#vanVignette)" pointer-events="none"/>
+
+        <!-- Subtle dust particles in cabin -->
+        <g class="cabin-dust" opacity="0.2" pointer-events="none">
+            <circle cx="200" cy="350" r="1" fill="#c9b896" class="dust dust-1"/>
+            <circle cx="550" cy="320" r="0.8" fill="#c9b896" class="dust dust-2"/>
+            <circle cx="350" cy="400" r="1.2" fill="#c9b896" class="dust dust-3"/>
+            <circle cx="650" cy="380" r="0.7" fill="#c9b896" class="dust dust-4"/>
+            <circle cx="150" cy="450" r="1" fill="#c9b896" class="dust dust-5"/>
+        </g>
+    </svg>
+</div>
